@@ -28,5 +28,7 @@ with tqdm(total=len(filenames)) as pbar:
         if not os.path.isdir(filename) and filename.endswith(file_ext_1):
             input_path = os.path.join(path, filename)
             output_path = os.path.join(path, subfolder, filename.split('.')[0] + file_ext_2)
+            # 运行ffmpeg并隐藏ffmpeg输出内容
             run(['ffmpeg', '-i', input_path, output_path], stdout=PIPE, stderr=PIPE)
+        # 将ffmpeg输出内容替换为tqdm进度条
         pbar.update(1)
