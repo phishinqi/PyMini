@@ -1,6 +1,7 @@
 import os
 from subprocess import run, PIPE
 from tqdm import tqdm
+from asyncio import TaskGroup
 
 # 获取path中的所有文件名
 path = input("请输入需要转换的目录：")
@@ -23,12 +24,17 @@ if not file_ext_2.startswith('.'):
 
 # 对于每个文件，使用ffmpeg将其转换为另一格式
 with tqdm(total=len(filenames)) as pbar:
-    for filename in filenames:
-        # 忽略文件夹和非file_ext_1格式文件
-        if not os.path.isdir(filename) and filename.endswith(file_ext_1):
-            input_path = os.path.join(path, filename)
-            output_path = os.path.join(path, subfolder, filename.split('.')[0] + file_ext_2)
-            # 运行ffmpeg并隐藏ffmpeg输出内容
-            run(['ffmpeg', '-i', input_path, output_path], stdout=PIPE, stderr=PIPE)
+    def runFfmpeg(inpath, outpath):
+        run(['ffmpeg', '-i', inpath, outpath], stdout=PIPE, stderr=PIPE)
         # 将ffmpeg输出内容替换为tqdm进度条
         pbar.update(1)
+
+
+    async with TaskGroup() as tg:
+        for filename in filenames:
+            # 忽略文件夹和非file_ext_1格式文件
+            if not os.path.isdir(filename) and filename.endswith(file_ext_1):
+                input_path = os.path.join(path, filename)
+                output_path = os.path.join(path, subfolder, filename.split('.')[0] + file_ext_2)
+                # 运行ffmpeg并隐藏ffmpeg输出内容
+                tg.create_task(runFfmpeg(input_path, output_path))
