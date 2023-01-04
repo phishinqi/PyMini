@@ -22,19 +22,23 @@ if not file_ext_2.startswith('.'):
     # 如果不是，就在它的前面添加一个点号
     file_ext_2 = '.' + file_ext_2
 
-# 对于每个文件，使用ffmpeg将其转换为另一格式
-with tqdm(total=len(filenames)) as pbar:
-    def runFfmpeg(inpath, outpath):
-        run(['ffmpeg', '-i', inpath, outpath], stdout=PIPE, stderr=PIPE)
-        # 将ffmpeg输出内容替换为tqdm进度条
-        pbar.update(1)
+if __name__ == '__main__':
+    main()
+
+async def main():
+    # 对于每个文件，使用ffmpeg将其转换为另一格式
+    with tqdm(total=len(filenames)) as pbar:
+        def runFfmpeg(inpath, outpath):
+            run(['ffmpeg', '-i', inpath, outpath], stdout=PIPE, stderr=PIPE)
+            # 将ffmpeg输出内容替换为tqdm进度条
+            pbar.update(1)
 
 
-    async with TaskGroup() as tg:
-        for filename in filenames:
-            # 忽略文件夹和非file_ext_1格式文件
-            if not os.path.isdir(filename) and filename.endswith(file_ext_1):
-                input_path = os.path.join(path, filename)
-                output_path = os.path.join(path, subfolder, filename.split('.')[0] + file_ext_2)
-                # 运行ffmpeg并隐藏ffmpeg输出内容
-                tg.create_task(runFfmpeg(input_path, output_path))
+        async with TaskGroup() as tg:
+            for filename in filenames:
+                # 忽略文件夹和非file_ext_1格式文件
+                if not os.path.isdir(filename) and filename.endswith(file_ext_1):
+                    input_path = os.path.join(path, filename)
+                    output_path = os.path.join(path, subfolder, filename.split('.')[0] + file_ext_2)
+                    # 运行ffmpeg并隐藏ffmpeg输出内容
+                    tg.create_task(runFfmpeg(input_path, output_path))
