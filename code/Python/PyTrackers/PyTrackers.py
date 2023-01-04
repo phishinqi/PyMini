@@ -37,7 +37,7 @@ else:
 
 
 #打開網頁
-#print("正在嘗試獲取trackers......")
+print("正在嘗試獲取trackers......")
 trackers_list = []
 for url_line in open("main_url.txt"):
     print(url_line)
