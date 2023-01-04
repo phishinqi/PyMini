@@ -3,12 +3,10 @@
 
 # 功能介绍
 
-## ReFile
-
-### RFF
+## RFF
 RFF是一个批量文件转换脚本，使用了ffmpeg
 
-### RFRN
+## RFRN
 RFRN是一个批量文件编号脚本
 
 ### 使用方法
