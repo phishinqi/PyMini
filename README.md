@@ -16,3 +16,6 @@ RFRN是一个批量文件编号脚本
 PyTrackers是從已有的Trackers訂閲列表中進行爬取並存儲與一個文本儅内。
 
 **注：main_url.txt為必須，不可刪除，我並沒有寫自動生成main_url.txt的程式碼！**
+
+## PyRemove
+為PyTrackers生產的Trackers文本儅去重
