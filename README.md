@@ -1,4 +1,6 @@
 # PyMini
+<div align=center><img src="https://count.getloli.com/get/@PyMiniForPhishinQi?theme=asoul"></div>  
+
 一个无用的小功能脚本
 
 # 功能介绍
