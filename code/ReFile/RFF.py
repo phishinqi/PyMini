@@ -4,11 +4,9 @@ from tqdm import tqdm
 import asyncio
 import shutil
 
-# 获取path中的所有文件名
+# 主要的变量
 path = input("请输入需要转换的目录：")
 filenames = os.listdir(path)
-
-# 获取转换的文件后缀
 file_ext_1 = input("请输入待转换的文件后缀：")
 file_ext_2 = input("请输入需要转换的文件后缀：")
 subfolder = file_ext_1 + ' converted to ' + file_ext_2
