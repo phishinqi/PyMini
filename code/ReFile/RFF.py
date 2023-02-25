@@ -18,7 +18,6 @@ if not file_ext_1.startswith('.'):
     file_ext_1 = '.' + file_ext_1
 # 同上
 if not file_ext_2.startswith('.'):
-    # 如果不是，就在它的前面添加一个点号
     file_ext_2 = '.' + file_ext_2
 
 # 判断文件夹是否存在
@@ -44,7 +43,7 @@ else:
 
 # 格式转换
 async def main():
-    # 对于每个文件，使用ffmpeg将其转换为另一格式
+    # 使用ffmpeg将其转换为另一格式
     with tqdm(total=len(filenames)) as pbar:
         async def runFfmpeg(inpath, outpath):
             run(['ffmpeg', '-i', inpath, outpath], stdout=PIPE, stderr=PIPE)
